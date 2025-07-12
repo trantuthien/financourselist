@@ -1,0 +1,37 @@
+# Moodle
+/moodledata/
+/config.php
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+
+# Compressed files (except releases)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Node modules (if any build tools used)
+node_modules/
+
+# Composer vendor (if used)
+vendor/
