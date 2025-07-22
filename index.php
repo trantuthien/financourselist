@@ -224,22 +224,21 @@ try {
 // Calculate pagination.
 $totalpages = ceil($totalcount / $perpage);
 
-// Load CSS file.
-$PAGE->requires->css('/local/financourselist/styles/styles.css');
+// Load CSS file using Moodle's standard approach.
+$PAGE->requires->css(new moodle_url('/local/financourselist/styles.css'));
+
+// Add dynamic CSS variables using Moodle's approach.
+$customcss = ":root {
+    --finan-primary: $primarycolor;
+    --finan-secondary: $secondarycolor;
+    --finan-dark-green: $darkgreen;
+    --finan-light-green: $lightgreen;
+    --finan-gradient: linear-gradient(135deg, $primarycolor 0%, $secondarycolor 100%);
+    --finan-header-text: $headertextcolor;
+}";
+$PAGE->requires->css_init_code($customcss);
 
 echo $OUTPUT->header();
-
-// Output CSS variables dynamically.
-echo html_writer::start_tag('style');
-echo ':root {';
-echo '    --finan-primary: ' . $primarycolor . ';';
-echo '    --finan-secondary: ' . $secondarycolor . ';';
-echo '    --finan-dark-green: ' . $darkgreen . ';';
-echo '    --finan-light-green: ' . $lightgreen . ';';
-echo '    --finan-gradient: linear-gradient(135deg, ' . $primarycolor . ' 0%, ' . $secondarycolor . ' 100%);';
-echo '    --finan-header-text: ' . $headertextcolor . ';';
-echo '}';
-echo html_writer::end_tag('style');
 ?>
 
 <div class="local-financourselist-header">
@@ -278,13 +277,13 @@ echo html_writer::end_tag('style');
     <div class="local-financourselist-filters" role="search" aria-label="<?php echo get_string('search_placeholder', 'local_financourselist'); ?>">
         <form method="get" action="">
             <div class="local-financourselist-search">
-                <label for="course-search" class="sr-only"><?php echo get_string('search_placeholder', 'local_financourselist'); ?></label>
+                <label for="course-search" class="local-financourselist-sr-only"><?php echo get_string('search_placeholder', 'local_financourselist'); ?></label>
                 <input type="text" id="course-search" name="search" value="<?php echo s($search); ?>" 
                        placeholder="<?php echo get_string('search_placeholder', 'local_financourselist'); ?>"
                        onchange="this.form.submit()" 
                        aria-describedby="search-help">
                 <i class="fas fa-search local-financourselist-search-icon" aria-hidden="true"></i>
-                <div id="search-help" class="sr-only"><?php echo get_string('search_placeholder', 'local_financourselist'); ?></div>
+                <div id="search-help" class="local-financourselist-sr-only"><?php echo get_string('search_placeholder', 'local_financourselist'); ?></div>
             </div>
             
             <div class="local-financourselist-category-filters">

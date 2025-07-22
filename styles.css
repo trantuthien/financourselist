@@ -35,7 +35,7 @@
 }
 
 /* Accessibility improvements */
-.sr-only {
+.local-financourselist-sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
