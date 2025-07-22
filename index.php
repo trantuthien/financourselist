@@ -160,16 +160,16 @@ foreach ($courses as $course) {
     if (strpos($categoryname, 'tài chính') !== false || strpos($categoryname, 'finance') !== false) {
         $categorytype = 'finance';
         $icon = 'fas fa-chart-line';
-    } else if (strpos($categoryname, 'kế toán') !== false || strpos($categoryname, 'accounting') !== false) {
+    } elseif (strpos($categoryname, 'kế toán') !== false || strpos($categoryname, 'accounting') !== false) {
         $categorytype = 'accounting';
         $icon = 'fas fa-calculator';
-    } else if (strpos($categoryname, 'đầu tư') !== false || strpos($categoryname, 'investment') !== false) {
+    } elseif (strpos($categoryname, 'đầu tư') !== false || strpos($categoryname, 'investment') !== false) {
         $categorytype = 'investment';
         $icon = 'fas fa-trending-up';
-    } else if (strpos($categoryname, 'công nghệ') !== false || strpos($categoryname, 'technology') !== false) {
+    } elseif (strpos($categoryname, 'công nghệ') !== false || strpos($categoryname, 'technology') !== false) {
         $categorytype = 'technology';
         $icon = 'fas fa-microchip';
-    } else if (strpos($categoryname, 'marketing') !== false) {
+    } elseif (strpos($categoryname, 'marketing') !== false) {
         $categorytype = 'marketing';
         $icon = 'fas fa-bullhorn';
     } else {

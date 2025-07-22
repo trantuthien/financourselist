@@ -1,6 +1,15 @@
 # Finan Course List Plugin for Moodle
 
+[![Moodle Plugin](https://img.shields.io/badge/moodle-plugin-orange.svg)](https://moodle.org/plugins/local_financourselist)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 A modern, responsive course listing plugin that provides an enhanced way to display and browse courses with customizable branding, advanced filtering, and multi-language support.
+
+**Plugin Type:** local  
+**Plugin Name:** financourselist  
+**Moodle Component:** local_financourselist  
+
+> **Note on Repository Naming:** This repository is named `financourselist` for historical reasons. The Moodle recommended naming convention would be `moodle-local_financourselist`. However, the plugin itself follows all Moodle standards and is properly identified as `local_financourselist` in all code and configuration files.
 
 ## Description
 
