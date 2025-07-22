@@ -25,10 +25,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_financourselist';
-$plugin->version = 2025011702; // Updated version for templates and Output API implementation.
+$plugin->version = 2025011703; // Code style compliance update.
 $plugin->requires = 2022112800; // Moodle 4.1.
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.1.0';
+$plugin->release = '1.1.1';
 $plugin->supported = [401, 404]; // Moodle 4.1-4.4.
 
 // Plugin URLs for Moodle.org directory.
