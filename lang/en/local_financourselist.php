@@ -18,7 +18,7 @@
  * Language strings for local_financourselist plugin
  *
  * @package    local_financourselist
- * @copyright  2024 Finan
+ * @copyright  2025 Orwell <thien.trantu@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
