@@ -135,6 +135,20 @@ if ($hassiteconfig) {
         PARAM_TEXT
     ));
 
+    $settings->add(new admin_setting_configtext('local_financourselist/defaultcompletionrate',
+        get_string('default_completion_rate', 'local_financourselist'),
+        get_string('default_completion_rate_desc', 'local_financourselist'),
+        '94',
+        PARAM_INT
+    ));
+
+    $settings->add(new admin_setting_configtext('local_financourselist/defaultaveragerating',
+        get_string('default_average_rating', 'local_financourselist'),
+        get_string('default_average_rating_desc', 'local_financourselist'),
+        '4.8',
+        PARAM_FLOAT
+    ));
+
     // Add settings page to the local plugins category.
     $ADMIN->add('localplugins', $settings);
 }

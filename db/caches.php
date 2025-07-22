@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details for Finan Course List.
+ * Cache definitions for local_financourselist
  *
  * @package    local_financourselist
  * @copyright  2025 Orwell <thien.trantu@gmail.com>
@@ -24,13 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_financourselist';
-$plugin->version = 2025011701; // Updated version for performance and accessibility improvements.
-$plugin->requires = 2022112800; // Moodle 4.1.
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.12';
-$plugin->supported = [401, 404]; // Moodle 4.1-4.4.
-
-// Plugin URLs for Moodle.org directory.
-$plugin->dependencies = [];
-$plugin->cron = 0;
+$definitions = [
+    'courseimages' => [
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 100,
+        'ttl' => 3600, // 1 hour
+        'invalidationevents' => [
+            'courseupdated',
+            'courseimageupdated'
+        ]
+    ]
+]; 

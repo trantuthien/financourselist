@@ -34,12 +34,12 @@ function local_financourselist_extend_navigation(global_navigation $navigation) 
 
     // Add to main navigation.
     $courselist = $navigation->add(
-        'Danh sách khóa học',
+        get_string('navigation_title', 'local_financourselist'),
         new moodle_url('/local/financourselist/index.php'),
         navigation_node::TYPE_CUSTOM,
         null,
         'courselist',
-        new pix_icon('i/course', 'Danh sách khóa học')
+        new pix_icon('i/course', get_string('navigation_title', 'local_financourselist'))
     );
 
     $courselist->showinflatnavigation = true;
@@ -56,7 +56,7 @@ function local_financourselist_extend_navigation_frontpage(navigation_node $fron
     global $CFG;
 
     $frontpage->add(
-        'Danh sách khóa học',
+        get_string('navigation_title', 'local_financourselist'),
         new moodle_url('/local/financourselist/index.php'),
         navigation_node::TYPE_CUSTOM,
         null,
