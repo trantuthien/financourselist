@@ -18,17 +18,17 @@
  * Settings for local_financourselist plugin
  *
  * @package    local_financourselist
- * @copyright  2024 Finan
+ * @copyright  2025 Finan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    // Create the settings page
+    // Create the settings page.
     $settings = new admin_settingpage('local_financourselist_settings', get_string('pluginname', 'local_financourselist'));
 
-    // Color settings
+    // Color settings.
     $settings->add(new admin_setting_heading('local_financourselist/colorsheading',
         get_string('color_settings', 'local_financourselist'),
         get_string('color_settings_desc', 'local_financourselist')
@@ -69,7 +69,7 @@ if ($hassiteconfig) {
         null
     ));
 
-    // Display settings
+    // Display settings.
     $settings->add(new admin_setting_heading('local_financourselist/displaysheading',
         get_string('display_settings', 'local_financourselist'),
         get_string('display_settings_desc', 'local_financourselist')
@@ -81,11 +81,11 @@ if ($hassiteconfig) {
         1
     ));
 
-    $imageoptions = array(
+    $imageoptions = [
         'courseimage' => get_string('use_course_image', 'local_financourselist'),
         'icon' => get_string('use_category_icon', 'local_financourselist'),
-        'both' => get_string('use_both_fallback', 'local_financourselist')
-    );
+        'both' => get_string('use_both_fallback', 'local_financourselist'),
+    ];
 
     $settings->add(new admin_setting_configselect('local_financourselist/imagemode',
         get_string('image_mode', 'local_financourselist'),
@@ -101,12 +101,12 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
-    $gridoptions = array(
+    $gridoptions = [
         2 => '2 ' . get_string('columns', 'local_financourselist'),
         3 => '3 ' . get_string('columns', 'local_financourselist'),
         4 => '4 ' . get_string('columns', 'local_financourselist'),
-        5 => '5 ' . get_string('columns', 'local_financourselist')
-    );
+        5 => '5 ' . get_string('columns', 'local_financourselist'),
+    ];
 
     $settings->add(new admin_setting_configselect('local_financourselist/gridcolumns',
         get_string('grid_columns', 'local_financourselist'),
@@ -115,7 +115,7 @@ if ($hassiteconfig) {
         $gridoptions
     ));
 
-    // Content settings
+    // Content settings.
     $settings->add(new admin_setting_heading('local_financourselist/contentsheading',
         get_string('content_settings', 'local_financourselist'),
         get_string('content_settings_desc', 'local_financourselist')
@@ -135,6 +135,6 @@ if ($hassiteconfig) {
         PARAM_TEXT
     ));
 
-    // Add settings page to the local plugins category
+    // Add settings page to the local plugins category.
     $ADMIN->add('localplugins', $settings);
 }

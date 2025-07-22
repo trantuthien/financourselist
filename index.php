@@ -5,28 +5,44 @@
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Finan Course List main page.
+ *
+ * @package    local_financourselist
+ * @copyright  2025 Orwell <thien.trantu@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 require_once('../../config.php');
 
-// Require login
+// Require login.
 require_login();
 
-// Check capability
+// Check capability.
 require_capability('local/financourselist:view', context_system::instance());
 
-// Set up the page
+// Set up the page.
 $PAGE->set_url('/local/financourselist/index.php');
 $PAGE->set_context(context_system::instance());
 $PAGE->set_title('Danh Sách Khóa Học - Finan');
-$PAGE->set_heading(''); // Hide default page heading
-$PAGE->set_pagelayout('standard'); // Use standard layout
+$PAGE->set_heading(''); // Hide default page heading.
+$PAGE->set_pagelayout('standard'); // Use standard layout.
 
-// Get parameters
+// Get parameters.
 $search = optional_param('search', '', PARAM_TEXT);
 $category = optional_param('category', 0, PARAM_INT);
 $page = optional_param('page', 0, PARAM_INT);
 
-// Get settings
+// Get settings.
 $perpage = get_config('local_financourselist', 'coursesperpage') ?: 15;
 $showstats = get_config('local_financourselist', 'showstats');
 $imagemode = get_config('local_financourselist', 'imagemode') ?: 'courseimage';
@@ -39,13 +55,13 @@ $headertextcolor = get_config('local_financourselist', 'headertextcolor') ?: '#F
 $pagetitle = get_config('local_financourselist', 'pagetitle') ?: get_string('courselist_page_heading', 'local_financourselist');
 $pagesubtitle = get_config('local_financourselist', 'pagesubtitle') ?: get_string('page_description', 'local_financourselist');
 
-// Get courses data
-$courses = array();
+// Get courses data.
+$courses = [];
 $totalcount = 0;
 
-// Build SQL query
-$params = array();
-$whereclauses = array('c.visible = 1', 'c.id != 1'); // Exclude site course
+// Build SQL query.
+$params = [];
+$whereclauses = ['c.visible = 1', 'c.id != 1']; // Exclude site course.
 
 if (!empty($search)) {
     $whereclauses[] = "(c.fullname LIKE :search1 OR c.summary LIKE :search2)";
@@ -73,43 +89,43 @@ $sql = "SELECT c.*, cat.name as categoryname
 
 $courses = $DB->get_records_sql($sql, $params, $page * $perpage, $perpage);
 
-// Process courses data
-$coursesdata = array();
+// Process courses data.
+$coursesdata = [];
 foreach ($courses as $course) {
-    // Get enrollment count
+    // Get enrollment count.
     $enrolledsql = "SELECT COUNT(DISTINCT ue.userid) 
                     FROM {user_enrolments} ue 
                     JOIN {enrol} e ON ue.enrolid = e.id 
                     WHERE e.courseid = ? AND ue.status = 0";
-    $enrolledcount = $DB->count_records_sql($enrolledsql, array($course->id));
+    $enrolledcount = $DB->count_records_sql($enrolledsql, [$course->id]);
     
-    // Get activities count
-    $activitiescount = $DB->count_records('course_modules', array('course' => $course->id, 'visible' => 1));
+    // Get activities count.
+    $activitiescount = $DB->count_records('course_modules', ['course' => $course->id, 'visible' => 1]);
     
-    // Determine category type and icon
+    // Determine category type and icon.
     $categorytype = 'business';
     $categoryname = strtolower($course->categoryname ?: '');
     
     if (strpos($categoryname, 'tài chính') !== false || strpos($categoryname, 'finance') !== false) {
         $categorytype = 'finance';
         $icon = 'fas fa-chart-line';
-    } elseif (strpos($categoryname, 'kế toán') !== false || strpos($categoryname, 'accounting') !== false) {
+    } else if (strpos($categoryname, 'kế toán') !== false || strpos($categoryname, 'accounting') !== false) {
         $categorytype = 'accounting';
         $icon = 'fas fa-calculator';
-    } elseif (strpos($categoryname, 'đầu tư') !== false || strpos($categoryname, 'investment') !== false) {
+    } else if (strpos($categoryname, 'đầu tư') !== false || strpos($categoryname, 'investment') !== false) {
         $categorytype = 'investment';
         $icon = 'fas fa-trending-up';
-    } elseif (strpos($categoryname, 'công nghệ') !== false || strpos($categoryname, 'technology') !== false) {
+    } else if (strpos($categoryname, 'công nghệ') !== false || strpos($categoryname, 'technology') !== false) {
         $categorytype = 'technology';
         $icon = 'fas fa-microchip';
-    } elseif (strpos($categoryname, 'marketing') !== false) {
+    } else if (strpos($categoryname, 'marketing') !== false) {
         $categorytype = 'marketing';
         $icon = 'fas fa-bullhorn';
     } else {
         $icon = 'fas fa-briefcase';
     }
     
-    // Get course image
+    // Get course image.
     $courseimage = null;
     if ($imagemode == 'courseimage' || $imagemode == 'both') {
         require_once($CFG->libdir . '/filelib.php');
@@ -118,13 +134,13 @@ foreach ($courses as $course) {
         $files = $fs->get_area_files($context->id, 'course', 'overviewfiles', 0, 'filename', false);
         if (!empty($files)) {
             $file = reset($files);
-            // Use the correct URL generation for course overview files
-            $courseimage = file_encode_url($CFG->wwwroot . '/pluginfile.php', 
+            // Use the correct URL generation for course overview files.
+            $courseimage = file_encode_url($CFG->wwwroot . '/pluginfile.php',
                 '/' . $context->id . '/course/overviewfiles/' . $file->get_filename());
         }
     }
     
-    $coursesdata[] = array(
+    $coursesdata[] = [
         'id' => $course->id,
         'title' => format_string($course->fullname),
         'description' => strip_tags(format_text($course->summary, $course->summaryformat)),
@@ -134,14 +150,14 @@ foreach ($courses as $course) {
         'courseimage' => $courseimage,
         'students' => $enrolledcount,
         'activities' => $activitiescount,
-        'url' => new moodle_url('/course/view.php', array('id' => $course->id))
-    );
+        'url' => new moodle_url('/course/view.php', ['id' => $course->id]),
+    ];
 }
 
-// Get categories for filter
-$categories = $DB->get_records('course_categories', array('visible' => 1), 'name ASC');
+// Get categories for filter.
+$categories = $DB->get_records('course_categories', ['visible' => 1], 'name ASC');
 
-// Calculate pagination
+// Calculate pagination.
 $totalpages = ceil($totalcount / $perpage);
 
 echo $OUTPUT->header();
@@ -532,7 +548,8 @@ echo $OUTPUT->header();
         <form method="get" action="">
             <div class="finan-search">
                 <input type="text" name="search" value="<?php echo s($search); ?>" 
-                       placeholder="<?php echo get_string('search_placeholder', 'local_financourselist'); ?>" onchange="this.form.submit()">
+                       placeholder="<?php echo get_string('search_placeholder', 'local_financourselist'); ?>"
+                       onchange="this.form.submit()">
                 <i class="fas fa-search search-icon"></i>
             </div>
             
@@ -542,7 +559,7 @@ echo $OUTPUT->header();
                     <?php echo get_string('all_categories', 'local_financourselist'); ?>
                 </a>
                 <?php foreach ($categories as $cat): ?>
-                    <a href="<?php echo new moodle_url('/local/financourselist/index.php', array('category' => $cat->id)); ?>" 
+                    <a href="<?php echo new moodle_url('/local/financourselist/index.php', ['category' => $cat->id]); ?>" 
                        class="category-filter <?php echo ($category == $cat->id) ? 'active' : ''; ?>">
                         <?php echo format_string($cat->name); ?>
                     </a>
@@ -584,7 +601,10 @@ echo $OUTPUT->header();
                             <div class="course-meta">
                                 <div class="course-stats">
                                     <span><i class="fas fa-users"></i> <?php echo $course['students']; ?></span>
-                                    <span><i class="fas fa-book"></i> <?php echo $course['activities']; ?> <?php echo get_string('activities', 'local_financourselist'); ?></span>
+                                    <span>
+                                        <i class="fas fa-book"></i> <?php echo $course['activities']; ?>
+                                        <?php echo get_string('activities', 'local_financourselist'); ?>
+                                    </span>
                                 </div>
                             </div>
                             <a href="<?php echo $course['url']; ?>" class="btn-finan">
@@ -600,8 +620,12 @@ echo $OUTPUT->header();
     <!-- Pagination Info -->
     <?php if ($totalcount > 0): ?>
         <div class="pagination-info">
-            <?php echo get_string('showing', 'local_financourselist'); ?> <?php echo ($page * $perpage + 1); ?> - <?php echo min(($page + 1) * $perpage, $totalcount); ?> 
-            <?php echo get_string('of_total', 'local_financourselist'); ?> <?php echo $totalcount; ?> <?php echo get_string('courses', 'local_financourselist'); ?>
+            <?php echo get_string('showing', 'local_financourselist'); ?>
+            <?php echo ($page * $perpage + 1); ?> -
+            <?php echo min(($page + 1) * $perpage, $totalcount); ?>
+            <?php echo get_string('of_total', 'local_financourselist'); ?>
+            <?php echo $totalcount; ?>
+            <?php echo get_string('courses', 'local_financourselist'); ?>
         </div>
     <?php endif; ?>
 
@@ -610,7 +634,7 @@ echo $OUTPUT->header();
         <div class="pagination-finan">
             <?php if ($page > 0): ?>
                 <a href="<?php echo new moodle_url('/local/financourselist/index.php', 
-                    array('search' => $search, 'category' => $category, 'page' => $page - 1)); ?>" 
+                    ['search' => $search, 'category' => $category, 'page' => $page - 1]); ?>" 
                    class="page-link">
                     <i class="fas fa-chevron-left"></i> <?php echo get_string('previous', 'local_financourselist'); ?>
                 </a>
@@ -628,7 +652,7 @@ echo $OUTPUT->header();
             // Always show first page
             if ($start > 0): ?>
                 <a href="<?php echo new moodle_url('/local/financourselist/index.php', 
-                    array('search' => $search, 'category' => $category, 'page' => 0)); ?>" 
+                    ['search' => $search, 'category' => $category, 'page' => 0]); ?>" 
                    class="page-link">1</a>
                 <?php if ($start > 1): ?>
                     <span class="page-link disabled">...</span>
@@ -636,27 +660,27 @@ echo $OUTPUT->header();
             <?php endif; ?>
             
             <?php for ($i = $start; $i <= $end; $i++): ?>
-                <a href="<?php echo new moodle_url('/local/financourselist/index.php', 
-                    array('search' => $search, 'category' => $category, 'page' => $i)); ?>" 
+                <a href="<?php echo new moodle_url('/local/financourselist/index.php',
+                    ['search' => $search, 'category' => $category, 'page' => $i]); ?>" 
                    class="page-link <?php echo ($i == $page) ? 'active' : ''; ?>">
                     <?php echo $i + 1; ?>
                 </a>
             <?php endfor; ?>
             
             <?php 
-            // Always show last page
+            // Always show last page.
             if ($end < $totalpages - 1): ?>
                 <?php if ($end < $totalpages - 2): ?>
                     <span class="page-link disabled">...</span>
                 <?php endif; ?>
-                <a href="<?php echo new moodle_url('/local/financourselist/index.php', 
-                    array('search' => $search, 'category' => $category, 'page' => $totalpages - 1)); ?>" 
+                <a href="<?php echo new moodle_url('/local/financourselist/index.php',
+                    ['search' => $search, 'category' => $category, 'page' => $totalpages - 1]); ?>" 
                    class="page-link"><?php echo $totalpages; ?></a>
             <?php endif; ?>
             
             <?php if ($page < $totalpages - 1): ?>
-                <a href="<?php echo new moodle_url('/local/financourselist/index.php', 
-                    array('search' => $search, 'category' => $category, 'page' => $page + 1)); ?>" 
+                <a href="<?php echo new moodle_url('/local/financourselist/index.php',
+                    ['search' => $search, 'category' => $category, 'page' => $page + 1]); ?>" 
                    class="page-link">
                     <?php echo get_string('next', 'local_financourselist'); ?> <i class="fas fa-chevron-right"></i>
                 </a>
@@ -671,4 +695,3 @@ echo $OUTPUT->header();
 
 <?php
 echo $OUTPUT->footer();
-?>
