@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Add course list page to navigation.
  *
+ * @package    local_financourselist
  * @param global_navigation $navigation The global navigation object
  */
 function local_financourselist_extend_navigation(global_navigation $navigation) {
@@ -48,6 +49,7 @@ function local_financourselist_extend_navigation(global_navigation $navigation) 
 /**
  * Add course list to flat navigation.
  *
+ * @package    local_financourselist
  * @param navigation_node $frontpage The frontpage navigation node
  * @param stdClass $course The course object
  * @param context $context The context object
