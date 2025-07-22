@@ -2,6 +2,24 @@
 
 All notable changes to the Finan Course List plugin will be documented in this file.
 
+## [1.1.0] - 2025-01-17
+
+### Major Architecture Changes
+- **Implemented Moodle Templates**: Migrated from legacy HTML generation to modern Mustache templates
+- **Added Output API Support**: Implemented renderer and output classes following Moodle standards
+- **Improved Maintainability**: Separated presentation logic from business logic
+- **Better Code Organization**: Created proper MVC structure with templates, renderers, and output classes
+
+### Files Added
+- `classes/output/course_list_page.php` - Main output class for the course list page
+- `classes/output/renderer.php` - Renderer class following Moodle standards
+- `templates/course_list_page.mustache` - Main page template
+- `templates/statistics.mustache` - Statistics section template
+- `templates/filters.mustache` - Search and filter template
+- `templates/course_grid.mustache` - Course grid template
+- `templates/empty_state.mustache` - Empty state template
+- `templates/pagination.mustache` - Pagination template
+
 ## [1.0.12] - 2025-01-17
 
 ### Performance Improvements

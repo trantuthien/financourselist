@@ -15,22 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details for Finan Course List.
+ * Renderer for local_financourselist.
  *
  * @package    local_financourselist
  * @copyright  2025 Orwell <thien.trantu@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_financourselist\output;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_financourselist';
-$plugin->version = 2025011702; // Updated version for templates and Output API implementation.
-$plugin->requires = 2022112800; // Moodle 4.1.
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.1.0';
-$plugin->supported = [401, 404]; // Moodle 4.1-4.4.
+use plugin_renderer_base;
 
-// Plugin URLs for Moodle.org directory.
-$plugin->dependencies = [];
-$plugin->cron = 0;
+/**
+ * Renderer for local_financourselist.
+ *
+ * @package    local_financourselist
+ * @copyright  2025 Orwell <thien.trantu@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class renderer extends plugin_renderer_base {
+    
+    /**
+     * Render the course list page.
+     *
+     * @param course_list_page $page
+     * @return string
+     */
+    public function render_course_list_page(course_list_page $page) {
+        $data = $page->export_for_template($this);
+        return $this->render_from_template('local_financourselist/course_list_page', $data);
+    }
+}

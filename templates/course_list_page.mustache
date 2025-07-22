@@ -1,0 +1,99 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_financourselist/course_list_page
+
+    Course list page template.
+
+    Context variables required for this template:
+    * pagetitle - The page title
+    * pagesubtitle - The page subtitle
+    * showstats - Whether to show statistics
+    * stats - Statistics data (if showstats is true)
+    * search - Current search term
+    * categories - Array of categories for filter
+    * courses - Array of courses to display
+    * hascourses - Whether there are courses to display
+    * pagination - Pagination data
+    * haspagination - Whether to show pagination
+    * strings - Language strings
+
+    Example context (json):
+    {
+        "pagetitle": "Course List",
+        "pagesubtitle": "Enhance your skills",
+        "showstats": true,
+        "stats": {
+            "totalcourses": 25,
+            "totalstudents": 1500,
+            "completionrate": 94,
+            "averagerating": 4.8
+        },
+        "search": "",
+        "categories": [
+            {
+                "id": 0,
+                "name": "All",
+                "active": true,
+                "url": "/local/financourselist/index.php"
+            }
+        ],
+        "hascourses": true,
+        "courses": [
+            {
+                "id": 1,
+                "title": "Sample Course",
+                "description": "Course description",
+                "categoryname": "Finance",
+                "categoryclass": "local-financourselist-finance",
+                "icon": "fas fa-chart-line",
+                "hasimage": false,
+                "students": 150,
+                "activities": 25,
+                "url": "/course/view.php?id=1",
+                "jointext": "Join now"
+            }
+        ]
+    }
+}}
+
+<div class="local-financourselist-header">
+    <div class="container">
+        <h1><i class="fas fa-graduation-cap me-3"></i>{{pagetitle}}</h1>
+        <p>{{pagesubtitle}}</p>
+    </div>
+</div>
+
+<div class="container">
+    {{#showstats}}
+    {{> local_financourselist/statistics }}
+    {{/showstats}}
+
+    {{> local_financourselist/filters }}
+
+    {{#hascourses}}
+    {{> local_financourselist/course_grid }}
+    {{/hascourses}}
+
+    {{^hascourses}}
+    {{> local_financourselist/empty_state }}
+    {{/hascourses}}
+
+    {{#haspagination}}
+    {{> local_financourselist/pagination }}
+    {{/haspagination}}
+</div>

@@ -1,0 +1,80 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_financourselist/pagination
+
+    Pagination template.
+
+    Context variables required for this template:
+    * pagination - Pagination data object containing:
+        * showingfrom - First item number
+        * showingto - Last item number
+        * totalcount - Total number of items
+        * previous - Previous page data
+        * next - Next page data
+        * pages - Array of page links
+}}
+
+{{#pagination.showingfrom}}
+<div class="local-financourselist-pagination-info">
+    {{#str}} showing, local_financourselist {{/str}}
+    {{pagination.showingfrom}} -
+    {{pagination.showingto}}
+    {{#str}} of_total, local_financourselist {{/str}}
+    {{pagination.totalcount}}
+    {{#str}} courses, local_financourselist {{/str}}
+</div>
+{{/pagination.showingfrom}}
+
+<div class="local-financourselist-pagination">
+    {{#pagination.previous}}
+        {{#disabled}}
+        <span class="local-financourselist-page-link disabled">
+            <i class="fas fa-chevron-left"></i> {{#str}} previous, local_financourselist {{/str}}
+        </span>
+        {{/disabled}}
+        {{^disabled}}
+        <a href="{{{url}}}" class="local-financourselist-page-link">
+            <i class="fas fa-chevron-left"></i> {{#str}} previous, local_financourselist {{/str}}
+        </a>
+        {{/disabled}}
+    {{/pagination.previous}}
+    
+    {{#pagination.pages}}
+        {{#ellipsis}}
+            <span class="local-financourselist-page-link disabled">...</span>
+        {{/ellipsis}}
+        {{^ellipsis}}
+            <a href="{{{url}}}" class="local-financourselist-page-link {{#active}}active{{/active}}">
+                {{number}}
+            </a>
+        {{/ellipsis}}
+    {{/pagination.pages}}
+    
+    {{#pagination.next}}
+        {{#disabled}}
+        <span class="local-financourselist-page-link disabled">
+            {{#str}} next, local_financourselist {{/str}} <i class="fas fa-chevron-right"></i>
+        </span>
+        {{/disabled}}
+        {{^disabled}}
+        <a href="{{{url}}}" class="local-financourselist-page-link">
+            {{#str}} next, local_financourselist {{/str}} <i class="fas fa-chevron-right"></i>
+        </a>
+        {{/disabled}}
+    {{/pagination.next}}
+</div>
